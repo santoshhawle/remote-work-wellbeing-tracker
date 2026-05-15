@@ -42,10 +42,14 @@ export default function SettingsPage() {
       }
       setPermError('');
       setEnabled(true);
+      setSaved(false);
+      updateSettings({ enabled: true, time });
     } else {
-      // Opt out
+      // Opt out — persist immediately so scheduler stops without needing Save
       setEnabled(false);
       setPermError('');
+      setSaved(false);
+      updateSettings({ enabled: false, time });
     }
   }
 
