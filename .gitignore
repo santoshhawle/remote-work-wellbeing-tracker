@@ -7,6 +7,7 @@ node_modules/
 dist/
 build/
 client/dist/
+client/coverage/
 
 # Environment files
 .env
