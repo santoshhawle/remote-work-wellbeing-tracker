@@ -6,6 +6,7 @@ import {
   ReactNode,
 } from 'react';
 import { clearAuth, storeAuth } from '../api';
+import { clearUserData } from '../services/notificationStorage';
 import type { User } from '../types';
 
 interface AuthContextType {
@@ -42,6 +43,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   function logout() {
+    if (user) clearUserData(user.id);
     clearAuth();
     setUser(null);
   }

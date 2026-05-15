@@ -4,9 +4,12 @@ import { CheckCircle } from 'lucide-react';
 import Header from '../components/Header';
 import RatingInput from '../components/RatingInput';
 import { api } from '../api';
+import { useAuth } from '../contexts/AuthContext';
+import { markCheckedInToday } from '../services/notificationStorage';
 
 export default function CheckInPage() {
   const navigate = useNavigate();
+  const { user } = useAuth();
 
   const [mood,      setMood]      = useState(0);
   const [energy,    setEnergy]    = useState(0);
@@ -46,6 +49,7 @@ export default function CheckInPage() {
         notes: notes.trim() || undefined,
         work_hours: workHours === '' ? 8 : workHours,
       });
+      if (user) markCheckedInToday(user.id);
       setDone(true);
       setTimeout(() => navigate('/suggestions'), 1800);
     } catch (err: unknown) {

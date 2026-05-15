@@ -7,6 +7,7 @@ import {
   CalendarClock,
   LogOut,
   Heart,
+  Settings,
 } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 
@@ -15,6 +16,7 @@ const navItems = [
   { to: '/checkin',     label: 'Daily Check-in',     icon: ClipboardEdit   },
   { to: '/suggestions', label: 'Suggestions',        icon: Lightbulb       },
   { to: '/calendar',    label: 'Meeting Optimiser',  icon: CalendarClock   },
+  { to: '/settings',    label: 'Settings',           icon: Settings        },
 ];
 
 export default function Header() {
