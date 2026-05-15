@@ -3,7 +3,7 @@
 **Jira Story:** [KAN-1](https://santoshhawle.atlassian.net/browse/KAN-1)
 **Date:** 2026-05-15
 **Author:** Architecture Designer
-**Status:** Reviewed
+**Status:** Approved
 
 ---
 

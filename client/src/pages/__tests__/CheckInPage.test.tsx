@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
 import CheckInPage from '../CheckInPage';
 
 // ── Module mocks ────────────────────────────────────────────────────────────
@@ -97,5 +97,30 @@ describe('CheckInPage', () => {
     });
     expect(mockCreate).not.toHaveBeenCalled();
     expect(mockMarkCheckedInToday).not.toHaveBeenCalled();
+  });
+
+  it('pre-fills form fields from an existing log for today', async () => {
+    const { api } = await import('../../api');
+    vi.mocked(api.logs.getToday).mockResolvedValue({
+      id: 1,
+      user_id: 42,
+      date: '2026-05-15',
+      mood: 6,
+      energy: 7,
+      focus: 8,
+      notes: 'Good day',
+      work_hours: 6,
+    } as never);
+
+    await act(async () => {
+      render(<CheckInPage />);
+    });
+
+    // RatingInput mock shows "Label: value" — check values reflect the pre-filled log
+    await waitFor(() => {
+      expect(screen.getByTestId('rating-😊 Mood').textContent).toContain('6');
+      expect(screen.getByTestId('rating-⚡ Energy').textContent).toContain('7');
+      expect(screen.getByTestId('rating-🎯 Focus').textContent).toContain('8');
+    });
   });
 });
