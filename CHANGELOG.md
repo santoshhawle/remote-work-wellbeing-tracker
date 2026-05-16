@@ -9,6 +9,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added — chore(ci): Husky git hooks, commitlint, and Copilot instructions (2026-05-15)
+
+**Infrastructure**: Adds the full hooks layer for the Agentic SDLC Pipeline — three Husky git hooks (commit-msg, pre-commit, pre-push), a commitlint configuration, four scoped GitHub Copilot instruction files, and a GitHub Actions CI workflow. Enforces code quality standards and commit conventions defined in `.github/instructions/sdlc.instructions.md`.
+
+#### New files
+- `.husky/commit-msg` — validates commit messages via commitlint (`<type>(<scope>): <desc>` format)
+- `.husky/pre-commit` — blocks `console.log` in production code, detects hardcoded secrets, runs `tsc --noEmit` on client and server
+- `.husky/pre-push` — blocks direct pushes to `main`, runs full client test suite (59 tests)
+- `commitlint.config.cjs` — SDLC-scoped type/scope enums (feat, fix, docs, test, refactor, chore)
+- `.github/instructions/docs.instructions.md` — enforces SDLC document header, status lifecycle, no placeholder text
+- `.github/instructions/tests.instructions.md` — enforces happy path + edge case coverage, mocking rules, naming conventions
+- `.github/instructions/server.instructions.md` — enforces auth middleware, parameterised SQL, no secrets, rate limiting
+- `.github/instructions/client.instructions.md` — enforces all HTTP via `src/api.ts`, TypeScript strict, React hooks rules
+- `.github/workflows/ci.yml` — CI jobs: client (tsc + vitest), server (tsc), commitlint on PRs
+- `package.json` / `package-lock.json` — adds `husky` and `@commitlint/cli` + `@commitlint/config-conventional` dev deps
+
+---
+
 ### Added — KAN-1: US-001 Daily Check-in Reminder (2026-05-15)
 
 **Feature**: Daily browser push notification system with a user-configurable reminder time, opt-in/out toggle, and automatic suppression once the user has checked in for the day.
