@@ -81,7 +81,7 @@ This plan decomposes the approved architecture (`docs/architecture.md`) into 8 d
 
 ---
 
-### T-04 — Build `ExportControls` component
+### ✅ T-04 — Build `ExportControls` component
 
 | Field | Value |
 |-------|-------|
