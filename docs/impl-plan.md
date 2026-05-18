@@ -104,7 +104,7 @@ This plan decomposes the approved architecture (`docs/architecture.md`) into 8 d
 
 ---
 
-### T-05 — Integrate `ExportControls` into `DashboardPage`
+### ✅ T-05 — Integrate `ExportControls` into `DashboardPage`
 
 | Field | Value |
 |-------|-------|
@@ -123,7 +123,7 @@ This plan decomposes the approved architecture (`docs/architecture.md`) into 8 d
 
 ---
 
-### T-06 — Unit-test `csvSerialize` helper
+### ✅ T-06 — Unit-test `csvSerialize` helper
 
 | Field | Value |
 |-------|-------|
@@ -147,7 +147,7 @@ This plan decomposes the approved architecture (`docs/architecture.md`) into 8 d
 
 ---
 
-### T-07 — Unit-test `GET /api/logs/export` route
+### ✅ T-07 — Unit-test `GET /api/logs/export` route
 
 | Field | Value |
 |-------|-------|
@@ -171,7 +171,7 @@ This plan decomposes the approved architecture (`docs/architecture.md`) into 8 d
 
 ---
 
-### T-08 — Unit-test `ExportControls` component
+### ✅ T-08 — Unit-test `ExportControls` component
 
 | Field | Value |
 |-------|-------|
