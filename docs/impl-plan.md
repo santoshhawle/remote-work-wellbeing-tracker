@@ -15,7 +15,7 @@ This plan decomposes the approved architecture (`docs/architecture.md`) into 8 d
 
 ## Tasks
 
-### T-01 — Add `csvSerialize` helper
+### ✅ T-01 — Add `csvSerialize` helper
 
 | Field | Value |
 |-------|-------|
