@@ -61,7 +61,7 @@ This plan decomposes the approved architecture (`docs/architecture.md`) into 8 d
 
 ---
 
-### T-03 — Add `api.logs.exportCsv()` client method
+### ✅ T-03 — Add `api.logs.exportCsv()` client method
 
 | Field | Value |
 |-------|-------|
