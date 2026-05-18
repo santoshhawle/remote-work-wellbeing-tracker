@@ -3,7 +3,7 @@
 **Story ID:** KAN-2
 **Date:** 2026-05-18
 **Author:** Architecture Designer
-**Status:** Draft
+**Status:** Reviewed
 
 ---
 
@@ -168,3 +168,11 @@ No external services are required. This feature is entirely self-contained.
 **Rationale:** Pushing the row cap into the query is the most efficient approach — the database does the work without materialising the full result set in Node.js memory.
 
 **Trade-off:** Users are silently capped without a warning in v1. A `X-Export-Truncated: true` response header is noted as a future enhancement.
+
+---
+
+### D-6: Explicit error handling — client and server (added post-design-review F-1, F-2)
+
+**Client (F-1):** `ExportControls` wraps the `api.logs.exportCsv()` call in a `try/catch`. On failure it renders an inline error message (e.g. "Export failed — please try again.") and re-enables the Export button so the user can retry. The loading/disabled state is reset in the `finally` block.
+
+**Server (F-2):** The `GET /api/logs/export` route handler is wrapped in a `try/catch`. On any DB or serialization error the handler logs the error server-side and returns `HTTP 500 { error: 'Export failed' }`. Stack traces are never forwarded to the client.
