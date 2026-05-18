@@ -20,6 +20,10 @@ export default function ExportControls() {
     setLoading(true);
     try {
       if (preset === 'custom') {
+        if (!custom.start || !custom.end) {
+          setError('Please select both a start and end date.');
+          return;
+        }
         await api.logs.exportCsv({ start: custom.start, end: custom.end });
       } else {
         await api.logs.exportCsv({ days: parseInt(preset, 10) });

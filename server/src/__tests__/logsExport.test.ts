@@ -134,6 +134,15 @@ describe('GET /api/logs/export', () => {
     expect(res.status).toBe(400);
   });
 
+  it('should return 400 for a semantically invalid date (e.g. month 13) — F-1', async () => {
+    const res = await supertest(makeApp())
+      .get('/api/logs/export?start=2026-13-45&end=2026-01-31')
+      .set('Authorization', `Bearer ${makeToken()}`);
+
+    expect(res.status).toBe(400);
+    expect(res.body.error).toContain('Invalid date value');
+  });
+
   it('should only return logs belonging to the authenticated user (F-5/NFR-2)', async () => {
     seedLog(1, '2026-05-01'); // user 1
     seedLog(2, '2026-05-02'); // user 2

@@ -125,4 +125,13 @@ describe('ExportControls', () => {
     await user.click(button);
     await waitFor(() => expect(screen.queryByRole('alert')).not.toBeInTheDocument());
   });
+
+  it('should show an error and not call exportCsv when custom preset is selected with empty dates — F-2', async () => {
+    const { user } = setup();
+    await user.selectOptions(screen.getByLabelText(/date range/i), 'custom');
+    // leave date inputs empty
+    await user.click(screen.getByRole('button', { name: /export wellbeing logs as csv/i }));
+    expect(screen.getByRole('alert')).toHaveTextContent(/please select both a start and end date/i);
+    expect(mockExportCsv).not.toHaveBeenCalled();
+  });
 });

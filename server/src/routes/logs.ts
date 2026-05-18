@@ -9,6 +9,13 @@ router.use(authenticate);
 const DATE_RE = /^\d{4}-\d{2}-\d{2}$/;
 const CSV_HEADERS = ['date', 'mood', 'energy', 'focus', 'notes', 'work_hours', 'name', 'email'];
 
+/** Validates both format and calendar correctness (e.g. rejects 2026-13-45). */
+function isCalendarDate(s: string): boolean {
+  const [y, m, d] = s.split('-').map(Number);
+  const dt = new Date(y, m - 1, d);
+  return dt.getFullYear() === y && dt.getMonth() === m - 1 && dt.getDate() === d;
+}
+
 // GET /api/logs/export?days=30  OR  ?start=YYYY-MM-DD&end=YYYY-MM-DD
 router.get('/export', (req: AuthRequest, res: Response): void => {
   try {
@@ -21,6 +28,10 @@ router.get('/export', (req: AuthRequest, res: Response): void => {
       if (typeof start !== 'string' || !DATE_RE.test(start) ||
           typeof end !== 'string' || !DATE_RE.test(end)) {
         res.status(400).json({ error: 'Invalid date format. Use YYYY-MM-DD.' });
+        return;
+      }
+      if (!isCalendarDate(start) || !isCalendarDate(end)) {
+        res.status(400).json({ error: 'Invalid date value.' });
         return;
       }
       if (start > end) {
