@@ -38,7 +38,7 @@ This plan decomposes the approved architecture (`docs/architecture.md`) into 8 d
 
 ---
 
-### T-02 — Add `GET /api/logs/export` route handler
+### ✅ T-02 — Add `GET /api/logs/export` route handler
 
 | Field | Value |
 |-------|-------|
