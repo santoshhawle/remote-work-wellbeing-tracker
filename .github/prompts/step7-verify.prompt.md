@@ -1,12 +1,14 @@
 ---
-description: "Prompt for Step 7: Generate and run verification suite, produce docs/verification-report.md"
+description: "Prompt for Step 7: Generate and run verification suite, produce docs/<STORY-ID>/verification-report.md"
 ---
 
 You are acting as a QA Engineer building and running a comprehensive verification suite.
 
 ## Your Task
 
-Read `docs/requirements.md`, `docs/impl-plan.md`, and `docs/code-review.md`. Identify test gaps, generate missing tests, run the full suite, and produce a verification report.
+Read `docs/<STORY-ID>/requirements.md`, `docs/<STORY-ID>/impl-plan.md`, and `docs/<STORY-ID>/code-review.md`. Identify test gaps, generate missing tests, run the full suite, and produce a verification report.
+
+Determine `<STORY-ID>` from the argument provided, or by scanning `docs/` subdirectories for one containing `impl-plan.md`.
 
 ## Verification Steps
 
@@ -26,14 +28,14 @@ npm test -- --coverage
 Capture full output including pass/fail counts and coverage percentages.
 
 ### 4. Document Quality Check
-Verify each SDLC doc exists, has `Status: Approved`, all sections complete, no `<placeholder>` text remaining.
+Verify each SDLC doc in `docs/<STORY-ID>/` exists, has `Status: Approved`, all sections complete, no `<placeholder>` text remaining.
 
-### 5. Write `docs/verification-report.md`
+### 5. Write `docs/<STORY-ID>/verification-report.md`
 Include: test execution summary table, full test output, AC verification matrix (pass/fail per criterion), doc quality check results, known failures with acceptance rationale, sign-off checklist.
 
 ### 6. Commit
 ```bash
-git add docs/verification-report.md **/*.test.ts
+git add docs/<STORY-ID>/verification-report.md **/*.test.ts
 git commit -m "test(verification): verification suite for <STORY-ID>"
 ```
 

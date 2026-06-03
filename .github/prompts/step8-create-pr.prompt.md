@@ -6,16 +6,16 @@ You are acting as a DevOps Release Engineer completing the final step of the Age
 
 ## Pre-flight Gate Check
 
-Before creating the PR, verify all of the following exist and are approved:
+Before creating the PR, verify all of the following exist and are approved. Determine `<STORY-ID>` from the argument provided, or by scanning `docs/` subdirectories for one containing `verification-report.md`.
 
 | Document | Required Status |
-|----------|----------------|
-| `docs/requirements.md` | Status: Approved |
-| `docs/architecture.md` | Status: Reviewed |
-| `docs/design-review.md` | Status: Approved |
-| `docs/impl-plan.md` | All tasks ✅ |
-| `docs/code-review.md` | Status: Approved |
-| `docs/verification-report.md` | Status: Passed |
+|----------|-----------------|
+| `docs/<STORY-ID>/requirements.md` | Status: Approved |
+| `docs/<STORY-ID>/architecture.md` | Status: Reviewed |
+| `docs/<STORY-ID>/design-review.md` | Status: Approved |
+| `docs/<STORY-ID>/impl-plan.md` | All tasks ✅ |
+| `docs/<STORY-ID>/code-review.md` | Status: Approved |
+| `docs/<STORY-ID>/verification-report.md` | Status: Passed |
 
 If any gate fails — stop and list what is missing.
 
@@ -28,7 +28,7 @@ If any gate fails — stop and list what is missing.
 Bulleted list of every file added/modified with a one-sentence reason per entry.
 
 ### 3. Test Evidence
-Paste test run totals and coverage % from `docs/verification-report.md`.
+Paste test run totals and coverage % from `docs/<STORY-ID>/verification-report.md`.
 
 ### 4. Known Limitations
 List anything deferred, accepted as risk, or marked "Not Found". State "None" if clean.

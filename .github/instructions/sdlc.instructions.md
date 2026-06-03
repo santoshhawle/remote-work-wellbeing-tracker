@@ -12,18 +12,19 @@ This project follows an 8-step Agentic SDLC Pipeline, each step owned by a dedic
 
 | Step | Agent | Output File |
 |------|-------|-------------|
-| 1 — Requirements | `Jira Requirements Capture` | `docs/requirements.md` |
-| 2 — Architecture | `Architecture Designer` | `docs/architecture.md` |
-| 3 — Design Review | `Design Reviewer` | `docs/design-review.md` |
-| 4 — Implementation Plan | `Implementation Planner` | `docs/impl-plan.md` |
+| 1 — Requirements | `Jira Requirements Capture` | `docs/<STORY-ID>/requirements.md` |
+| 2 — Architecture | `Architecture Designer` | `docs/<STORY-ID>/architecture.md` |
+| 3 — Design Review | `Design Reviewer` | `docs/<STORY-ID>/design-review.md` |
+| 4 — Implementation Plan | `Implementation Planner` | `docs/<STORY-ID>/impl-plan.md` |
 | 5 — Implementation | `Code Implementer` | source code |
-| 6 — Code Review | `Code Reviewer` | `docs/code-review.md` |
-| 7 — Verification | `Verification Suite` | `docs/verification-report.md` |
+| 6 — Code Review | `Code Reviewer` | `docs/<STORY-ID>/code-review.md` |
+| 7 — Verification | `Verification Suite` | `docs/<STORY-ID>/verification-report.md` |
 | 8 — PR | `PR Creator` | Pull Request |
 
 ## Document Conventions
 
-- All SDLC documents live under `docs/`.
+- All SDLC documents live under `docs/<STORY-ID>/` (e.g. `docs/KAN-1/requirements.md`).
+- The `<STORY-ID>` directory is created by the Jira Requirements Capture agent at Step 1.
 - Every document must include a header with: **Story ID**, **Date**, **Author (agent name)**, **Status**.
 - Statuses: `Draft` → `In Review` → `Approved` → `Superseded`.
 - Never delete a document — update its status to `Superseded` and create a new version.

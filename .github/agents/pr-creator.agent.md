@@ -22,7 +22,7 @@ Verify all pipeline gates are complete:
 
 | Gate | Check |
 |------|-------|
-| requirements.md exists | `docs/requirements.md` readable |
+| requirements.md exists | `docs/<STORY-ID>/requirements.md` readable |
 | architecture.md approved | Status = Reviewed or Approved |
 | design-review.md approved | Status = Approved |
 | impl-plan.md complete | All tasks marked ✅ |
@@ -30,6 +30,8 @@ Verify all pipeline gates are complete:
 | verification-report.md passed | Status = Passed |
 
 If any gate fails, list what is missing and stop. Do not create the PR.
+
+> Determine `<STORY-ID>` from the argument provided, or by scanning `docs/` subdirectories for one containing `verification-report.md`.
 
 ### Step 2 — Gather PR Context
 
@@ -42,11 +44,11 @@ Use the GitHub MCP tools to gather context:
    ```bash
    git log main..HEAD --oneline          # all commits in this branch
    git diff main --stat                   # changed files summary
-   git diff main -- docs/                 # SDLC doc changes
+   git diff main -- docs/<STORY-ID>/          # SDLC doc changes
    ```
 5. **Current branch** — run `git branch --show-current` locally.
 
-Also read `docs/verification-report.md` for test evidence.
+Also read `docs/<STORY-ID>/verification-report.md` for test evidence.
 
 If on `main`, ask the user which feature branch to use for the PR.
 
