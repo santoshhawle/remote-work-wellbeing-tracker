@@ -58,6 +58,44 @@ export const api = {
       request<WellbeingLog[]>('GET', `/logs?days=${days}`),
     create: (data: CreateLogData) =>
       request<WellbeingLog>('POST', '/logs', data),
+    exportCsv: async (params: { days?: number; start?: string; end?: string } = {}): Promise<void> => {
+      const token = localStorage.getItem('wbt_token');
+      const searchParams = new URLSearchParams();
+      if (params.start !== undefined && params.end !== undefined) {
+        searchParams.set('start', params.start);
+        searchParams.set('end', params.end);
+      } else if (params.days !== undefined) {
+        searchParams.set('days', String(params.days));
+      }
+      const qs = searchParams.toString();
+      const endpoint = `${BASE}/logs/export${qs ? `?${qs}` : ''}`;
+
+      const res = await fetch(endpoint, {
+        headers: {
+          ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        },
+      });
+
+      if (!res.ok) {
+        if (res.status === 401) {
+          localStorage.removeItem('wbt_token');
+          localStorage.removeItem('wbt_user');
+          window.location.href = '/login';
+        }
+        const data = await res.json().catch(() => ({})) as { error?: string };
+        throw new Error(data.error ?? 'Export failed');
+      }
+
+      const blob = await res.blob();
+      const objectUrl = URL.createObjectURL(blob);
+      const anchor = document.createElement('a');
+      anchor.href = objectUrl;
+      anchor.download = 'wellbeing-logs.csv';
+      document.body.appendChild(anchor);
+      anchor.click();
+      document.body.removeChild(anchor);
+      URL.revokeObjectURL(objectUrl);
+    },
   },
 
   suggestions: {

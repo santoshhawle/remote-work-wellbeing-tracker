@@ -1,8 +1,14 @@
 ---
-description: "Prompt for Step 1: Read a Jira user story, ask clarifying questions, and capture final requirements in docs/requirements.md"
+name: "Step 1: Capture Requirements"
+argument-hint: "Provide the Jira story ID to capture requirements for."
+description: "Prompt for Step 1: Read a Jira user story, ask clarifying questions, and capture final requirements in docs/<STORY-ID>/requirements.md"
+agent: 'agent'
+model: 'GPT-5.4'
 ---
 
-You are acting as a Requirements Analyst. A Jira user story has been provided (or will be fetched by story ID).
+You are acting as a Requirements Analyst. ${input:JiraStoryID:Please provide the Jira story ID to capture requirements for.}
+
+
 
 ## Your Task
 
@@ -16,12 +22,12 @@ You are acting as a Requirements Analyst. A Jira user story has been provided (o
    - Non-functional requirements (performance, security, accessibility)
    - Definition of Done
 4. **Synthesize** the story + answers into a structured requirements summary and get user approval.
-5. **Write** `docs/requirements.md` using the standard SDLC template.
-6. **Commit**: `git add docs/requirements.md && git commit -m "docs(requirements): capture requirements for <STORY-ID>"`
+5. **Write** `docs/<STORY-ID>/requirements.md` — create the `docs/<STORY-ID>/` directory if it does not exist, where `<STORY-ID>` is the Jira story ID.
+6. **Commit**: `git add docs/<STORY-ID>/requirements.md && git commit -m "docs(requirements): capture requirements for <STORY-ID>"`
 
 ## Output
 
-Produce `docs/requirements.md` with:
+Produce `docs/<STORY-ID>/requirements.md` with:
 - Overview, Scope (In/Out), Functional Requirements table, Non-Functional Requirements table, Acceptance Criteria checklist, Dependencies, Edge Cases & Assumptions, Definition of Done.
 
 Do not proceed to architecture until the user explicitly approves the requirements.

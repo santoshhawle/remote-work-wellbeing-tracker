@@ -9,21 +9,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Added — chore(ci): Husky git hooks, commitlint, and Copilot instructions (2026-05-15)
+### Added — KAN-2: Export Wellbeing Logs as CSV (2026-05-18)
 
-**Infrastructure**: Adds the full hooks layer for the Agentic SDLC Pipeline — three Husky git hooks (commit-msg, pre-commit, pre-push), a commitlint configuration, four scoped GitHub Copilot instruction files, and a GitHub Actions CI workflow. Enforces code quality standards and commit conventions defined in `.github/instructions/sdlc.instructions.md`.
+**Feature**: Authenticated users can export their personal wellbeing logs as a CSV file directly from the Dashboard. A date range selector (Last 7 / 30 / 90 days or custom range) is provided before download. The export is scoped strictly to the requesting user's data, capped at 1,000 rows, and produces a UTF-8 BOM CSV compatible with Excel, Google Sheets, and LibreOffice Calc.
 
 #### New files
-- `.husky/commit-msg` — validates commit messages via commitlint (`<type>(<scope>): <desc>` format)
-- `.husky/pre-commit` — blocks `console.log` in production code, detects hardcoded secrets, runs `tsc --noEmit` on client and server
-- `.husky/pre-push` — blocks direct pushes to `main`, runs full client test suite (59 tests)
-- `commitlint.config.cjs` — SDLC-scoped type/scope enums (feat, fix, docs, test, refactor, chore)
-- `.github/instructions/docs.instructions.md` — enforces SDLC document header, status lifecycle, no placeholder text
-- `.github/instructions/tests.instructions.md` — enforces happy path + edge case coverage, mocking rules, naming conventions
-- `.github/instructions/server.instructions.md` — enforces auth middleware, parameterised SQL, no secrets, rate limiting
-- `.github/instructions/client.instructions.md` — enforces all HTTP via `src/api.ts`, TypeScript strict, React hooks rules
-- `.github/workflows/ci.yml` — CI jobs: client (tsc + vitest), server (tsc), commitlint on PRs
-- `package.json` / `package-lock.json` — adds `husky` and `@commitlint/cli` + `@commitlint/config-conventional` dev deps
+- `server/src/utils/csvSerialize.ts` — RFC 4180 CSV serializer with UTF-8 BOM, CSV injection neutralisation (`=+-@` prefix with `\t`), and proper quoting for fields containing commas/newlines
+- `server/src/__tests__/csvSerialize.test.ts` — 10 unit tests for the CSV serializer
+- `server/src/__tests__/logsExport.test.ts` — 10 integration tests for the export route (auth, date ranges, user isolation, empty range, semantic date validation)
+- `server/vitest.config.ts` — Vitest configuration for server-side test execution
+- `client/src/components/ExportControls.tsx` — React component with date range selector, loading/disabled state, inline error display, and WCAG AA labels
+- `client/src/__tests__/api.test.ts` — 8 unit tests for `api.logs.exportCsv`
+- `client/src/components/__tests__/ExportControls.test.tsx` — 12 component tests (rendering, preset/custom range, loading, error, empty date guard)
+- `docs/requirements.md`, `docs/architecture.md`, `docs/design-review.md`, `docs/impl-plan.md`, `docs/code-review.md`, `docs/verification-report.md` — full SDLC paper trail
+
+#### Modified files
+- `server/src/routes/logs.ts` — added `GET /api/logs/export` route with JWT auth, `?days=N` / `?start=&end=` query params, semantic date validation (`isCalendarDate`), `LIMIT 1000 ORDER BY date DESC`, and `try/catch` error handling
+- `client/src/api.ts` — added `api.logs.exportCsv()` using `fetch` + `Blob` + `URL.createObjectURL`; JWT sent in `Authorization` header only (never in URL)
+- `client/src/pages/DashboardPage.tsx` — mounted `<ExportControls />` below the stats and chart sections
+
+#### Bug fixes (found during code review)
+- **F-1**: Date regex accepted semantically invalid dates (e.g. `2026-13-45`); fixed by adding `isCalendarDate()` calendar-aware validation — returns HTTP 400 for invalid dates
+- **F-2**: `ExportControls` passed `{ start: '', end: '' }` to the server when custom preset selected with empty inputs; fixed by adding a client-side guard before any network call, with a clear user-facing error message
+
+#### Test summary
+- **99 tests, 0 failures** (20 server + 79 client)
+- New-code coverage: `csvSerialize.ts` 100% | `ExportControls.tsx` 100% stmts / 92.85% branch | `exportCsv` method 100%
 
 ---
 

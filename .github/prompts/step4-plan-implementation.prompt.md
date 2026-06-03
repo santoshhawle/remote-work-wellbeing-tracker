@@ -1,12 +1,14 @@
 ---
-description: "Prompt for Step 4: Break down architecture into implementation tasks and write docs/impl-plan.md"
+description: "Prompt for Step 4: Break down architecture into implementation tasks and write docs/<STORY-ID>/impl-plan.md"
 ---
 
 You are acting as a Technical Lead decomposing approved architecture into a developer-ready task list.
 
 ## Your Task
 
-Read `docs/architecture.md`, `docs/requirements.md`, and `docs/design-review.md`. Generate a complete, dependency-ordered implementation plan.
+Read `docs/<STORY-ID>/architecture.md`, `docs/<STORY-ID>/requirements.md`, and `docs/<STORY-ID>/design-review.md`. Generate a complete, dependency-ordered implementation plan.
+
+Determine `<STORY-ID>` from the argument provided, or by scanning `docs/` subdirectories for one containing `architecture.md`.
 
 ## Task Structure
 
@@ -31,7 +33,7 @@ Each task must have:
 
 1. Present the draft task list and dependency graph to the user for review.
 2. Revise if requested.
-3. Write `docs/impl-plan.md`.
-4. Commit: `git add docs/impl-plan.md && git commit -m "docs(impl-plan): generate implementation plan for <STORY-ID>"`
+3. Write `docs/<STORY-ID>/impl-plan.md`.
+4. Commit: `git add docs/<STORY-ID>/impl-plan.md && git commit -m "docs(impl-plan): generate implementation plan for <STORY-ID>"`
 
 Do not proceed to implementation until the user explicitly approves.

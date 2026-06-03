@@ -1,7 +1,6 @@
 ---
 description: "Full Agentic SDLC Pipeline — runs all 8 steps in sequence: requirements capture, architecture design, design review, implementation planning, code implementation, code review, verification, and PR creation. Use when: running the complete SDLC; orchestrating all pipeline steps; end-to-end delivery from Jira to PR. Trigger phrases: 'run SDLC pipeline', 'full pipeline', 'start from requirements', 'end-to-end delivery'."
 name: "SDLC Pipeline"
-tools: [read, edit, search, execute, agent]
 argument-hint: "Jira story ID to run the full pipeline for (e.g. KAN-1)"
 ---
 
@@ -37,28 +36,28 @@ At the start of each step, display:
 
 ### Step 1 — Requirements
 **Agent:** Jira Requirements Capture  
-**Output:** `docs/requirements.md`  
+**Output:** `docs/<STORY-ID>/requirements.md`  
 **Trigger:** Fetch Jira story `<STORY-ID>`, ask clarifying questions, produce requirements, get approval, commit.
 
 ---
 
 ### Step 2 — Architecture
 **Agent:** Architecture Designer  
-**Output:** `docs/architecture.md`  
-**Trigger:** Read `docs/requirements.md`, propose architecture, get approval, commit.
+**Output:** `docs/<STORY-ID>/architecture.md`  
+**Trigger:** Read `docs/<STORY-ID>/requirements.md`, propose architecture, get approval, commit.
 
 ---
 
 ### Step 3 — Design Review
 **Agent:** Design Reviewer  
-**Output:** `docs/design-review.md`, updated `docs/architecture.md`  
+**Output:** `docs/<STORY-ID>/design-review.md`, updated `docs/<STORY-ID>/architecture.md`  
 **Trigger:** Review architecture for risks/gaps across 10 categories, get user decisions on findings, commit.
 
 ---
 
 ### Step 4 — Implementation Planning
 **Agent:** Implementation Planner  
-**Output:** `docs/impl-plan.md`  
+**Output:** `docs/<STORY-ID>/impl-plan.md`  
 **Trigger:** Decompose architecture into T-## tasks with dependencies and estimates, get approval, commit.
 
 ---
@@ -72,14 +71,14 @@ At the start of each step, display:
 
 ### Step 6 — Code Review
 **Agent:** Code Reviewer  
-**Output:** `docs/code-review.md`  
+**Output:** `docs/<STORY-ID>/code-review.md`  
 **Trigger:** Review all changed files across 10 areas against requirements, produce findings, get approval, commit.
 
 ---
 
 ### Step 7 — Verification
 **Agent:** Verification Suite  
-**Output:** `docs/verification-report.md`, new test files  
+**Output:** `docs/<STORY-ID>/verification-report.md`, new test files  
 **Trigger:** Identify test gaps, generate missing tests, run suite, produce report, commit.
 
 ---

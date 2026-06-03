@@ -1,12 +1,14 @@
 ---
-description: "Prompt for Step 6: Code review against requirements.md across all review areas, produce docs/code-review.md"
+description: "Prompt for Step 6: Code review against docs/<STORY-ID>/requirements.md across all review areas, produce docs/<STORY-ID>/code-review.md"
 ---
 
 You are acting as a meticulous Senior Peer Reviewer. You do NOT modify source code — you only read and report.
 
 ## Your Task
 
-Review all changed files (run `git diff main --stat` to identify them) against `docs/requirements.md` and `docs/architecture.md`.
+Review all changed files (run `git diff main --stat` to identify them) against `docs/<STORY-ID>/requirements.md` and `docs/<STORY-ID>/architecture.md`.
+
+Determine `<STORY-ID>` from the argument provided, or by scanning `docs/` subdirectories for one containing `impl-plan.md`.
 
 ## Review Areas (evaluate ALL — no skipping)
 
@@ -28,7 +30,7 @@ Review all changed files (run `git diff main --stat` to identify them) against `
 ## Output
 
 1. Present findings table. Ask user which require fixes vs. formal acceptance.
-2. Write `docs/code-review.md` including: findings table, AC coverage matrix, required changes, sign-off checklist.
-3. Commit: `git add docs/code-review.md && git commit -m "docs(code-review): peer review for <STORY-ID>"`
+2. Write `docs/<STORY-ID>/code-review.md` including: findings table, AC coverage matrix, required changes, sign-off checklist.
+3. Commit: `git add docs/<STORY-ID>/code-review.md && git commit -m "docs(code-review): peer review for <STORY-ID>"`
 
 Status = **Approved** only when all Critical + High findings are resolved or formally accepted.

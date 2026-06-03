@@ -8,6 +8,7 @@ dist/
 build/
 client/dist/
 client/coverage/
+server/coverage/
 
 # Environment files
 .env

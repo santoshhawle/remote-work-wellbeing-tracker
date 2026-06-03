@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { ClipboardEdit, TrendingUp, Flame, Zap, Brain } from 'lucide-react';
 import Header from '../components/Header';
 import WellbeingChart from '../components/WellbeingChart';
+import ExportControls from '../components/ExportControls';
 import { api } from '../api';
 import { useAuth } from '../contexts/AuthContext';
 import type { WellbeingLog } from '../types';
@@ -186,6 +187,9 @@ export default function DashboardPage() {
                 No data yet. Start by logging today's wellbeing!
               </div>
             )}
+
+            {/* Export */}
+            <ExportControls />
           </>
         )}
       </main>
